@@ -1,0 +1,29 @@
+.appContainer {
+  margin-top: 4rem;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+button {
+  background-color: dimgray;
+  border: none;
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  border-radius: 30px;
+  margin: 8px 12px;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+  transition: 300ms;
+}
