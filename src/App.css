@@ -1,12 +1,13 @@
-.appContainer {
-  margin-top: 4rem;
-}
-
 .pages {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 4rem;
+  text-transform: capitalize;
+}
+
+.pokemonList span {
+  text-transform: capitalize;
+  text-align: center;
 }
 
 button {
@@ -23,6 +24,7 @@ button {
   margin: 8px 12px;
   cursor: pointer;
 }
+
 button:hover {
   opacity: 0.8;
   transition: 300ms;

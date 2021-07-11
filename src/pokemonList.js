@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
-import './pokemonCard.css';
+import PokemonCard from './PokemonCard'
 
 export default function PokemonList({pokemon}) {
   const colors = {
@@ -34,7 +34,7 @@ export default function PokemonList({pokemon}) {
     fairy: "https://i.imgur.com/ifIVH5O.png",
     poison: "https://i.imgur.com/tpEqp3O.png",
     bug:  "https://i.imgur.com/5N9JFCq.png",
-    dragon: "https://i.imgur.com/L0ToHpZ.png",
+    dragon: "https://i.imgur.com/zeZiQYf.png",
     psychic:"https://i.imgur.com/SeIpxwa.png",
     flying: "https://i.imgur.com/0hSckw2.png",
     fighting: "https://i.imgur.com/bZSxj0s.png",
@@ -45,16 +45,24 @@ export default function PokemonList({pokemon}) {
     ghost: "https://i.imgur.com/z1qi568.png"
   };
   
-  let random = Math.floor((Math.random() * 1118 + 1));
+  let random = Math.floor((Math.random() * 899 + 1));
   let url = "https://pokeapi.co/api/v2/pokemon/";
   let pokemonUrl = url + random;
   
   const [pokemonName, setPokemonName] = useState();
   const [pokemonId, setPokemonId] = useState();
-  const [pokemonType, setPokemonType] = useState();
+  const [pokemonType1, setPokemonType1] = useState();
+  const [pokemonType2, setPokemonType2] = useState();
   const [pokemonTypeImg1, setPokemonTypeImg1] = useState();
   const [pokemonTypeImg2, setPokemonTypeImg2] = useState();
   const [color, setColor] = useState();
+  const [color2, setColor2] = useState();
+
+
+  function stoperror() {
+    return true;
+ }
+
   
   useEffect(() => {
     axios.get(pokemonUrl)
@@ -63,19 +71,23 @@ export default function PokemonList({pokemon}) {
       setPokemonId(res.data.id);
      
       setPokemonTypeImg1(typeImg[(res.data.types.map(type => type.type.name))]);
-      setPokemonType((res.data.types.map(type => type.type.name)));
+      setPokemonType1((res.data.types.map(type => type.type.name)));
       setColor(colors[(res.data.types.map(type => type.type.name))]);
+      setColor2(colors[(res.data.types.map(type => type.type.name))]);
       
       if (res.data.types[1] !== undefined) {
-        setColor(colors[(res.data.types[0].type.name)]);
-        setPokemonTypeImg1(typeImg[(res.data.types[0].type.name)]);
-        setPokemonTypeImg2(typeImg[(res.data.types[1].type.name)]);
+        setColor(colors[(res.data?.types[0]?.type.name)]);
+        setColor2(colors[(res.data?.types[1]?.type.name)]);
+        setPokemonType1(res.data?.types[0]?.type.name);
+        setPokemonType2(res.data?.types[1]?.type.name);
+        setPokemonTypeImg1(typeImg[(res.data?.types[0]?.type.name)]);
+        setPokemonTypeImg2(typeImg[(res.data?.types[1]?.type.name)]);
       }
-      else return null
 
     })
-    .catch (error => {
-      console.log(error);
+    .catch (err => {
+      console.error(err);
+      window.onerror = stoperror;
     })
   }, []);
 
@@ -88,22 +100,13 @@ export default function PokemonList({pokemon}) {
               ))}
         </div>
 
-      <div className="pokemonCardContainer">
-        <div className="pokemonCard" style={{backgroundImage: "linear-gradient( #ffffff ," + color + " )" }}>
-            <h1>{pokemonName}</h1>
-            <p className="pokemonId">#{pokemonId}</p>
-            
-            <img className="pokemonImg" src={" https://pokeres.bastionbot.org/images/pokemon/" + parseInt(pokemonId) + ".png" } alt={pokemonName}/>
-            <div className="types">
-
-            <img className="typeImg" src={pokemonTypeImg1} alt={pokemonType}/>
-            <img className="typeImg" src={pokemonTypeImg2} alt={pokemonType}/>
-
-            </div>
-            <p>{pokemonType}</p>
-            <p>{color}</p>
-        </div>
-      </div>
+        <PokemonCard 
+          color = {color} color2 = {color2} 
+          pokemonId = {pokemonId} pokemonName = {pokemonName} 
+          pokemonTypeImg1 = {pokemonTypeImg1} pokemonTypeImg2 = {pokemonTypeImg2} 
+          pokemonType1 = {pokemonTypeImg1} pokemonType2 = {pokemonTypeImg2} 
+        />
+        
     </>
   )
 }
