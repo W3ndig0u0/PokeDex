@@ -4,6 +4,12 @@
   justify-content: center;
 }
 
+.pokemons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .pokemonCard {
   position: relative;
   display: flex;
@@ -14,14 +20,12 @@
 
   background-color: white;
   border-radius: 30px;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
-  margin: 3rem;
+  box-shadow: 2px 6px 20px rgba(0, 0, 0, 0.6);
+  margin-top: 8rem;
   padding: 2rem;
   width: 22rem;
   height: 30rem;
   text-align: center;
-  box-shadow: 1px 1.5px 10px;
-  -webkit-box-shadow: 1px 1.5px 10px;
 }
 
 .pokemonImgContainer {
@@ -48,7 +52,6 @@
   bottom: -10%;
   left: -20%;
   transition: 400ms;
-  animation: breath 7s ease-out infinite normal;
 }
 
 .typeImg {
@@ -79,25 +82,4 @@
   font-size: 1.7em;
   text-transform: capitalize;
   animation: hide 1s forwards ease;
-}
-
-@keyframes breath {
-  0% {
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.01);
-  }
-
-  50% {
-    transform: scale(1);
-  }
-
-  75% {
-    transform: scale(1.01);
-  }
-  100% {
-    transform: scale(1);
-  }
 }

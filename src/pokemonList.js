@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import PokemonCard from './PokemonCard'
 
-export default function PokemonList({pokemon}) {
+export default function PokemonList({random, pageUrl}) {
+  
   const colors = {
     fire: '#EE8130',
     grass: '#7AC74C',
@@ -44,8 +45,7 @@ export default function PokemonList({pokemon}) {
     steel:  "https://i.imgur.com/tCC7tJQ.png",
     ghost: "https://i.imgur.com/z1qi568.png"
   };
-  
-  let random = Math.floor((Math.random() * 899 + 1));
+
   let url = "https://pokeapi.co/api/v2/pokemon/";
   let pokemonUrl = url + random;
   
@@ -57,56 +57,46 @@ export default function PokemonList({pokemon}) {
   const [pokemonTypeImg2, setPokemonTypeImg2] = useState();
   const [color, setColor] = useState();
   const [color2, setColor2] = useState();
-
-
-  function stoperror() {
-    return true;
- }
-
+  const [loading, setLoading] = useState(true);
+  
   
   useEffect(() => {
+    setLoading(true);
     axios.get(pokemonUrl)
+
     .then(res => {
+      setLoading(false);
       setPokemonName(res.data.name);
       setPokemonId(res.data.id);
      
-      setPokemonTypeImg1(typeImg[(res.data.types.map(type => type.type.name))]);
-      setPokemonType1((res.data.types.map(type => type.type.name)));
+      setPokemonTypeImg1(typeImg[(res.data?.types[0]?.type.name)]);
+      setPokemonType1(res.data?.types[0]?.type.name);
       setColor(colors[(res.data.types.map(type => type.type.name))]);
       setColor2(colors[(res.data.types.map(type => type.type.name))]);
       
       if (res.data.types[1] !== undefined) {
         setColor(colors[(res.data?.types[0]?.type.name)]);
         setColor2(colors[(res.data?.types[1]?.type.name)]);
-        setPokemonType1(res.data?.types[0]?.type.name);
         setPokemonType2(res.data?.types[1]?.type.name);
-        setPokemonTypeImg1(typeImg[(res.data?.types[0]?.type.name)]);
         setPokemonTypeImg2(typeImg[(res.data?.types[1]?.type.name)]);
       }
 
     })
     .catch (err => {
       console.error(err);
-      window.onerror = stoperror;
     })
-  }, []);
+  }, [pageUrl]);
 
+  if (loading) return (<div className="loading">"loading.."</div>)
 
   return (
     <>
-        <div className="pokemonList">
-            {pokemon.map(p => (
-              <span key={p}> {p} </span>
-              ))}
-        </div>
 
         <PokemonCard 
           color = {color} color2 = {color2} 
           pokemonId = {pokemonId} pokemonName = {pokemonName} 
           pokemonTypeImg1 = {pokemonTypeImg1} pokemonTypeImg2 = {pokemonTypeImg2} 
-          pokemonType1 = {pokemonTypeImg1} pokemonType2 = {pokemonTypeImg2} 
-        />
-        
+          pokemonType1 = {pokemonType1} pokemonType2 = {pokemonType2} />
     </>
   )
 }

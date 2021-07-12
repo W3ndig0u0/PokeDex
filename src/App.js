@@ -1,54 +1,71 @@
 import React, {useState, useEffect} from 'react'
 import PokemonList from './pokemonList'
-import Pages from './Pages'
 import axios from 'axios';
 import './App.css'
 
 
 function App() {
-  
-  const [pokemon, setPokemon] = useState([]);
+
   const [nextPageUrl, setNextPageUrl] = useState();
-  const [prevPageUrl, setPrevPageUrl] = useState();
   const [pageUrl, setPageUrl] = useState("https://pokeapi.co/api/v2/pokemon");
-  const [loading, setLoading] = useState(true);
-  let cancel;
+
+  let random =  Math.floor((Math.random() * 899 + 1));
+  // let random =  1;
+  let randomLatest = random + 2;
+  const [count, setCount] = useState(0);
   
   // !körs bara en gång för varje gång pageUrl ändras
   useEffect(() =>{
-    setLoading(true);
-    axios.get(pageUrl, {cancelToken: new axios.CancelToken(c => cancel = c)})
+    axios.get(pageUrl)
     .then(res => {
-      setLoading(false);
       // !listan
       setNextPageUrl(res.data.next);
-      setPrevPageUrl(res.data.previous)
-      setPokemon(res.data.results.map(p => p.name));
     })
-    return () => cancel()
   }, [pageUrl]);
 
-  if (loading) return (<div className="loading">"loading.."</div>)
+  function Remove(e) {
+    setCount(count + 1)
+    document.getElementsByClassName("pokemonCardContainer")[0].remove()
+    console.log(document.getElementsByClassName("pokemonCardContainer").length);
+    console.log(nextPageUrl);
+    
+    if (document.getElementsByClassName("pokemonCardContainer").length === 0) {
+      setPageUrl(nextPageUrl);
+    }
+  }
 
-  function goToNextPage(){
+  function goToNextPage()
+  {
     setPageUrl(nextPageUrl);
   }
-
-  function goToPrevPage(){
-    setPageUrl(prevPageUrl);
-  }
+  
+  function Add(e){
+    let newRandom = randomLatest + count;
+    console.log(newRandom);
+    if (count < 1) {
+      return (
+        <>
+          <div className="pokemons">
+            <PokemonList random = {newRandom} pageUrl = { pageUrl } />
+          </div>
+        </>)
+      }
+    }
 
   return (
     <>
       <div className="appContainer">
         <div className="pokemons">
-          <PokemonList pokemon = {pokemon} />
+          <PokemonList random = {random} pageUrl = { pageUrl } />
+          <PokemonList random = {random + 1} pageUrl = { pageUrl } />
+          <PokemonList random = {randomLatest} pageUrl = { pageUrl } />
         </div>
 
         <div className="pages">
-          <Pages
-            goToNextPage = {nextPageUrl ? goToNextPage : null}
-            goToPrevPage = {prevPageUrl ? goToPrevPage : null} />
+          
+          {/* <button onClick = {Remove}>Remove</button> */}
+          <button onClick = {goToNextPage}>Next</button>
+          {/* <button onClick = {Add}>Add</button> */}
         </div>
       </div>
     </>

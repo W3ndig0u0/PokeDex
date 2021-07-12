@@ -2,14 +2,18 @@ import React from 'react'
 import './pokemonCard.css';
 
 export default function PokemonCard({color, color2, pokemonId, pokemonName, pokemonTypeImg1, pokemonTypeImg2, pokemonType1, pokemonType2}) {
-  return (
 
+  return (
     <div className="pokemonCardContainer">
-    <div className="pokemonCard" style={{backgroundImage: `linear-gradient(160deg,  ${color2}, ${color} )` }}>
+    <div className="pokemonCard" style={{backgroundImage: `linear-gradient(190deg,  ${color} 40%, ${color2} )` }}>
         
         <div className="pokemonImgContainer">
           <div className="pokemonBoxImg">
-          <img className="pokemonImg" src={" https://pokeres.bastionbot.org/images/pokemon/" + parseInt(pokemonId) + ".png" } alt={pokemonName}/>
+          <img 
+              className= {"pokemonImg"}
+              onLoad={() => ("loading")}
+              src={" https://pokeres.bastionbot.org/images/pokemon/" + parseInt(pokemonId) + ".png" } 
+              alt={pokemonName}/>
           </div>
         </div>
 
