@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import PokemonList from './pokemonList'
+import Search from './Search'
 import axios from 'axios';
 import './App.css'
 
@@ -7,21 +8,22 @@ import './App.css'
 function App() {
 
   const [nextPageUrl, setNextPageUrl] = useState();
-  const [pageUrl, setPageUrl] = useState("https://pokeapi.co/api/v2/pokemon");
 
+  const [pageUrl, setPageUrl] = useState("https://pokeapi.co/api/v2/pokemon");
+  const [count, setCount] = useState(0);
+  
   let random =  Math.floor((Math.random() * 899 + 1));
   // let random =  1;
   let randomLatest = random + 2;
-  const [count, setCount] = useState(0);
-  
+
   // !körs bara en gång för varje gång pageUrl ändras
   useEffect(() =>{
     axios.get(pageUrl)
     .then(res => {
-      // !listan
       setNextPageUrl(res.data.next);
     })
   }, [pageUrl]);
+
 
   function Remove(e) {
     setCount(count + 1)
@@ -33,6 +35,7 @@ function App() {
       setPageUrl(nextPageUrl);
     }
   }
+
 
   function goToNextPage()
   {
@@ -55,6 +58,9 @@ function App() {
   return (
     <>
       <div className="appContainer">
+
+        <Search />
+
         <div className="pokemons">
           <PokemonList random = {random} pageUrl = { pageUrl } />
           <PokemonList random = {random + 1} pageUrl = { pageUrl } />

@@ -2,7 +2,7 @@ import React from 'react'
 import './pokemonCard.css';
 
 export default function PokemonCard({color, color2, pokemonId, pokemonName, pokemonTypeImg1, pokemonTypeImg2, pokemonType1, pokemonType2}) {
-
+  
   return (
     <div className="pokemonCardContainer">
     <div className="pokemonCard" style={{backgroundImage: `linear-gradient(190deg,  ${color} 40%, ${color2} )` }}>
@@ -15,7 +15,7 @@ export default function PokemonCard({color, color2, pokemonId, pokemonName, poke
               src={" https://pokeres.bastionbot.org/images/pokemon/" + parseInt(pokemonId) + ".png" } 
               alt={pokemonName}/>
           </div>
-        </div>
+        </div>  
 
       <div className="pokemonStatsContainer">
           <p className="pokemonId">#{pokemonId}</p>

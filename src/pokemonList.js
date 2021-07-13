@@ -72,7 +72,7 @@ export default function PokemonList({random, pageUrl}) {
       setPokemonTypeImg1(typeImg[(res.data?.types[0]?.type.name)]);
       setPokemonType1(res.data?.types[0]?.type.name);
       setColor(colors[(res.data.types.map(type => type.type.name))]);
-      setColor2(colors[(res.data.types.map(type => type.type.name))]);
+      setColor2(colors[(res.data?.types[0]?.type.name)]);
       
       if (res.data.types[1] !== undefined) {
         setColor(colors[(res.data?.types[0]?.type.name)]);
