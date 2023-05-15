@@ -12,7 +12,7 @@ function App() {
   const [pageUrl, setPageUrl] = useState("https://pokeapi.co/api/v2/pokemon");
   const [count, setCount] = useState(0);
   
-  let random =  Math.floor((Math.random() * 899 + 1));
+  let random =  Math.floor((Math.random() * 950 + 1));
   // let random =  1;
   let randomLatest = random + 2;
 

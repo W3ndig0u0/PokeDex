@@ -12,7 +12,7 @@ export default function PokemonCard({color, color2, pokemonId, pokemonName, poke
           <img 
               className= {"pokemonImg"}
               onLoad={() => ("loading")}
-              src={" https://pokeres.bastionbot.org/images/pokemon/" + parseInt(pokemonId) + ".png" } 
+              src={" https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$" + parseInt(pokemonId) + ".png" } 
               alt={pokemonName}/>
           </div>
         </div>  
